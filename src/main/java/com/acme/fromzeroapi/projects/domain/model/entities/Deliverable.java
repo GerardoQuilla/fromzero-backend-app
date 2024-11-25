@@ -10,9 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Getter
 @Entity
@@ -40,20 +38,13 @@ public class Deliverable extends AuditableAbstractAggregateRoot<Deliverable> {
     @Column(columnDefinition = "TEXT")
     private String developerMessage;
 
-    @Setter
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "deliverable_id")
-    private List<File> files;
-
-    public Deliverable(CreateDeliverableCommand command, Project project/*,List<File> files*/) {
+    public Deliverable(CreateDeliverableCommand command, Project project) {
         this.name=command.name();
         this.description=command.description();
         this.date=command.date();
         this.state=DeliverableState.PENDIENTE;
         this.developerMessage=null;
         this.project=project;
-        this.files=new ArrayList<>();
-
     }
 
     public Deliverable() {
