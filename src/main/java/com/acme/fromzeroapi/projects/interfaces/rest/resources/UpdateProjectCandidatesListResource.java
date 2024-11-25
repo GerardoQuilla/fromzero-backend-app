@@ -7,6 +7,6 @@ import java.util.Set;
 
 public record UpdateProjectCandidatesListResource(
         String name,
-        Set<String> candidates
+        Set<Developer> candidates
 ) {
 }

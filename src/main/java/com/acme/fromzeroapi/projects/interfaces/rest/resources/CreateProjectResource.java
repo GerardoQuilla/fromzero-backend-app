@@ -11,7 +11,7 @@ import java.util.Set;
 public record CreateProjectResource(
         String name,
         String description,
-        String ownerId,
+        Long ownerId,
         Set<ProgrammingLanguages> languages,
         Set<Frameworks> frameworks,
         ProjectType type,
