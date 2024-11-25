@@ -15,19 +15,15 @@ import lombok.Setter;
 @Getter
 @Entity
 public class Payment extends AuditableAbstractAggregateRoot<Payment> {
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "developer_id")
-    private Developer developer;*/
-    @Column(name = "developer_id",nullable = false)
-    private String developerId;
+    private Developer developer;
 
-    /*@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(
             name = "project_id", unique = true, nullable = false
     )
-    private Project project;*/
-    @Column(name = "project_id", nullable = false)
-    private Long projectId;
+    private Project project;
 
     @Embedded
     private PaymentAmount amount;
@@ -40,10 +36,8 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
     private Card card;
 
     public Payment(Project project) {
-        //this.developer = project.getDeveloper();
-        this.developerId = project.getDeveloperId();
-        //this.project = project;
-        this.projectId = project.getId();
+        this.developer = project.getDeveloper();
+        this.project = project;
         this.amount=new PaymentAmount(
                 project.getBudget().budget()
                 ,Currency.valueOf(project.getBudget().currency().toString())

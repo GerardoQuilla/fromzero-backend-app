@@ -7,8 +7,11 @@ import java.util.Date;
 
 public record ChatResource(
         Long id,
-        String developer,
-        String company,
+        /*String developerId,
+        String companyId,*/
+        Developer developer,
+        Company company,
         Date createdAt
 ) {
+
 }

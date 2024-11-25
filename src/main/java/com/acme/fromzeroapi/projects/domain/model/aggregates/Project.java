@@ -1,5 +1,7 @@
 package com.acme.fromzeroapi.projects.domain.model.aggregates;
 
+import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
+import com.acme.fromzeroapi.profiles.domain.model.aggregates.Company;
 import com.acme.fromzeroapi.projects.domain.model.commands.CreateProjectCommand;
 import com.acme.fromzeroapi.projects.domain.model.events.CreateDefaultDeliverablesEvent;
 import com.acme.fromzeroapi.projects.domain.model.events.CreateDeliverablesByMethodologiesEvent;
@@ -31,20 +33,22 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
     @Setter
     private Double progress;
 
-    @Column(name = "company_id", nullable = false)
-    private String companyId;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     @Setter
-    @Column(name = "developer_id")
-    private String developerId;
+    @ManyToOne
+    @JoinColumn(name = "developer_id")
+    private Developer developer;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
             name = "project_candidates",
-            joinColumns = @JoinColumn(name = "project_id")
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "developer_id")
     )
-    @Column(name = "developer_id")
-    private Set<String> candidateIds = new HashSet<>();
+    private Set<Developer> candidates = new HashSet<>();
 
     @ElementCollection(targetClass = Frameworks.class, fetch = FetchType.EAGER)
     @CollectionTable(
@@ -52,7 +56,6 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
             joinColumns = @JoinColumn(name = "project_id")
     )
     @Enumerated(EnumType.STRING)
-    @Column(name = "frameworks", nullable = false)
     private Set<Frameworks> frameworks = new HashSet<>();
 
     @ElementCollection(targetClass = ProgrammingLanguages.class, fetch = FetchType.EAGER)
@@ -71,23 +74,25 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
     @Column(nullable = false)
     private ProjectBudget budget;
 
-    public Project(CreateProjectCommand command) {
+    public Project(CreateProjectCommand command, Company company) {
         this.name = command.name();
         this.description = command.description();
         this.state = ProjectState.EN_BUSQUEDA;
         this.progress = 0.0;
-        this.companyId = command.companyId();
+        this.company = company;
         this.frameworks = command.frameworks();
         this.languages = command.languages();
-        this.developerId = null;
+        this.developer = null;
         this.type = command.type();
-        this.budget = new ProjectBudget(command.budget(), command.currency());
+        this.budget=new ProjectBudget(command.budget(),command.currency());
     }
 
-    public Project() {}
+    public Project() {
 
-    public void createDefaultDeliverables(Long projectId, ProjectType type) {
-        this.registerEvent(new CreateDefaultDeliverablesEvent(this, projectId, type));
+    }
+
+    public void createDefaultDeliverables(Long projectId,ProjectType type){
+        this.registerEvent(new CreateDefaultDeliverablesEvent(this,projectId,type));
     }
 
     @Override
@@ -95,16 +100,14 @@ public class Project extends AuditableAbstractAggregateRoot<Project> {
         return super.domainEvents();
     }
 
-    public Collection<Object> getDomainEvents() {
+    public Collection<Object> getDomainEvents(){
         return this.domainEvents();
     }
 
     public void setProjectPayment(Long projectId) {
-        this.registerEvent(new SetProjectPaymentEvent(this, projectId));
+        this.registerEvent(new SetProjectPaymentEvent(this,projectId));
     }
-
-    public void createDeliverablesByMethodologies(Long projectId, String methodologies) {
-        this.registerEvent(new CreateDeliverablesByMethodologiesEvent(this, projectId, methodologies));
+    public void createDeliverablesByMethodologies(Long projectId,String methodologies){
+        this.registerEvent(new CreateDeliverablesByMethodologiesEvent(this,projectId,methodologies));
     }
 }
-

@@ -38,19 +38,19 @@ public class ProjectQueryServiceImpl implements ProjectQueryService {
 
     @Override
     public List<Project> handle(GetAllProjectsByDeveloperIdQuery query) {
-        var developer = externalProfileProjectService.getDeveloperByProfileId(query.developerId());
+        var developer = externalProfileProjectService.getDeveloperById(query.developerId());
         if (developer.isEmpty()){
             return List.of();
         }
-        return this.projectRepository.findAllByDeveloperId(developer.get().getProfileId().RecordId());
+        return this.projectRepository.findAllByDeveloper(developer.get());
     }
 
     @Override
     public List<Project> handle(GetAllProjectsByCompanyIdQuery query) {
-        var company = externalProfileProjectService.getCompanyByProfileId(query.companyId());
+        var company = externalProfileProjectService.getCompanyById(query.companyId());
         if (company.isEmpty()){
             return List.of();
         }
-        return this.projectRepository.findAllByCompanyId(company.get().getProfileId().RecordId());
+        return this.projectRepository.findAllByCompany(company.get());
     }
 }

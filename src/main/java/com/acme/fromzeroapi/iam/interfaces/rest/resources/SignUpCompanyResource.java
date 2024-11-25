@@ -1,7 +1,7 @@
 package com.acme.fromzeroapi.iam.interfaces.rest.resources;
 
 public record SignUpCompanyResource(
-        String email,
+        String mail,
         String password,
         String companyName
 ) {
