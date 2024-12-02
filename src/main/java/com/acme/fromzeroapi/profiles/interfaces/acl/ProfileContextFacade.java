@@ -5,10 +5,7 @@ import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperCompletedProjectsCommand;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetCompanyByIdQuery;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetCompanyByProfileIdQuery;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByIdQuery;
-import com.acme.fromzeroapi.profiles.domain.model.queries.GetDeveloperByProfileIdQuery;
+import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileCommandService;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileQueryService;
 //import com.acme.fromzeroapi.developer_branch_projects.domain.model.queries.GetDeveloperByIdQuery;
@@ -81,25 +78,27 @@ public class ProfileContextFacade {
         profileCommandService.handle(command);
     }
 
-    public Optional<Developer> getDeveloperById(Long id){
-        return profileQueryService.handle(new GetDeveloperByIdQuery(id));
+    public Optional<Developer> getDeveloperById(String id){
+        //return profileQueryService.handle(new GetDeveloperByIdQuery(id));
+        return profileQueryService.handle(new GetDeveloperProfileByIdOrRecordIdQuery(id));
     }
 
-    public Optional<Company> getCompanyById(Long id){
-        return profileQueryService.handle(new GetCompanyByIdQuery(id));
+    public Optional<Company> getCompanyById(String id){
+        //return profileQueryService.handle(new GetCompanyByIdQuery(id));
+        return profileQueryService.handle(new GetCompanyProfileByIdOrRecordIdQuery(id));
     }
 
-    public void updateDeveloperCompletedProjects(Long developerId){
+    public void updateDeveloperCompletedProjects(String developerId){
 
         var command = new UpdateDeveloperCompletedProjectsCommand(developerId);
         var updatedDeveloper = this.profileCommandService.handle(command);
     }
 
-    public Optional<Developer> getDeveloperByProfileId(String profileId){
+    /*public Optional<Developer> getDeveloperByProfileId(String profileId){
         return profileQueryService.handle(new GetDeveloperByProfileIdQuery(profileId));
     }
 
     public Optional<Company> getCompanyByProfileId(String profileId){
         return profileQueryService.handle(new GetCompanyByProfileIdQuery(profileId));
-    }
+    }*/
 }

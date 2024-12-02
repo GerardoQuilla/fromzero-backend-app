@@ -26,6 +26,7 @@ public class Developer extends AuditableAbstractAggregateRoot<Developer> {
     private String email;
 
     @Setter
+    @Column(columnDefinition = "TEXT")
     private String description = "No description provided.";
     @Setter
     private String country = "No country provided.";

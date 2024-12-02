@@ -1,6 +1,9 @@
 spring:
   application:
     name: FromZero Web Application
+  config:
+    import:
+      - env.properties
 
   datasource:
     url: ${DB_URL}
@@ -14,7 +17,7 @@ spring:
         account-name: ${AZURE_STORAGE_ACCOUNT_NAME:fromzerocontainer}
         blob:
           container-name: ${AZURE_CONTAINER_NAME:deliverables-files-container}
-        #account-key: ${AZURE_STORAGE_ACCOUNT_KEY}
+        account-key: ${AZURE_STORAGE_ACCOUNT_KEY}
 
   servlet:
     multipart:

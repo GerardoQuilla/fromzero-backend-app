@@ -1,5 +1,6 @@
 package com.acme.fromzeroapi.message.application.internal.commandServices;
 
+import com.acme.fromzeroapi.message.application.internal.outboundservices.ExternalProfileMessageService;
 import com.acme.fromzeroapi.message.domain.model.aggregates.Chat;
 import com.acme.fromzeroapi.message.domain.model.commands.CreateChatCommand;
 import com.acme.fromzeroapi.message.domain.services.ChatCommandService;
@@ -13,23 +14,28 @@ import java.util.Optional;
 
 @Service
 public class ChatCommandServiceImpl implements ChatCommandService {
-    private final ProfileContextFacade profileContextFacade;
+    //private final ProfileContextFacade profileContextFacade;
+    private final ExternalProfileMessageService externalProfileMesssageService;
     private final ChatRepository chatRepository;
 
 
-    public ChatCommandServiceImpl(ProfileContextFacade profileContextFacade, ChatRepository chatRepository) {
-        this.profileContextFacade = profileContextFacade;
+    public ChatCommandServiceImpl(
+            ProfileContextFacade profileContextFacade,
+            ExternalProfileMessageService externalProfileMesssageService,
+            ChatRepository chatRepository) {
+        this.externalProfileMesssageService = externalProfileMesssageService;
+        //this.profileContextFacade = profileContextFacade;
         this.chatRepository = chatRepository;
     }
 
     @Override
     public Optional<Long> handle(CreateChatCommand command) {
-        var company = profileContextFacade
+        var company = externalProfileMesssageService
                 .getCompanyByProfileId(command.companyId())
                 .orElseThrow(
                         ()->new CompanyNotFoundException(command.companyId())
                 );
-        var developer = profileContextFacade
+        var developer = externalProfileMesssageService
                 .getDeveloperByProfileId(command.developerId())
                 .orElseThrow(
                         ()->new DeveloperNotFoundException(command.developerId())
