@@ -20,19 +20,11 @@ public class ExternalProfileProjectService {
         return profileContextFacade.getDeveloperById(developerId);
     }
 
-    public Optional<Company> getCompanyById(Long companyId){
+    public Optional<Company> getCompanyById(String companyId){
         return profileContextFacade.getCompanyById(companyId);
     }
 
-    public void updateDeveloperCompletedProjects(Long developerId){
+    public void updateDeveloperCompletedProjects(String developerId){
         profileContextFacade.updateDeveloperCompletedProjects(developerId);
-    }
-
-    public Optional<Developer> getDeveloperByProfileId(String developerId){
-        return profileContextFacade.getDeveloperByProfileId(developerId);
-    }
-
-    public Optional<Company> getCompanyByProfileId(String companyId){
-        return profileContextFacade.getCompanyByProfileId(companyId);
     }
 }

@@ -4,11 +4,11 @@ import com.acme.fromzeroapi.iam.domain.model.commands.SignUpCompanyCommand;
 import com.acme.fromzeroapi.iam.interfaces.rest.resources.SignUpCompanyResource;
 
 public class CompanyCommandFromSignUpCompanyResourceAssembler {
-    public static SignUpCompanyCommand toCommandFromResource(SignUpCompanyResource signUpEnterpriseResource) {
+    public static SignUpCompanyCommand toCommandFromResource(SignUpCompanyResource resource) {
         return new SignUpCompanyCommand(
-                signUpEnterpriseResource.email(),
-                signUpEnterpriseResource.password(),
-                signUpEnterpriseResource.companyName()
+                resource.email(),
+                resource.password(),
+                resource.companyName()
         );
     }
 }

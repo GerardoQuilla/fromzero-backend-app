@@ -34,8 +34,7 @@ public class PaymentQueryServiceImpl implements PaymentQueryService {
         if (project.isEmpty()){
             return Optional.empty();
         }
-        //return paymentRepository.findByProject(project.get());
-        return paymentRepository.findByProjectId(query.projectId());
+        return paymentRepository.findByProject(project.get());
     }
 
     @Override
@@ -44,7 +43,6 @@ public class PaymentQueryServiceImpl implements PaymentQueryService {
         if (developer.isEmpty()){
             return List.of();
         }
-        //return paymentRepository.findAllByDeveloper(developer.get());
-        return paymentRepository.findAllByDeveloperId(query.developerId());
+        return paymentRepository.findAllByDeveloper(developer.get());
     }
 }

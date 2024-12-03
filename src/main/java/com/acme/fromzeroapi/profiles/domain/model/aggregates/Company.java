@@ -24,6 +24,7 @@ public class Company extends AuditableAbstractAggregateRoot<Company> {
     private Long userId;
 
     @Setter
+    @Column(columnDefinition = "TEXT")
     private String description = "No description provided.";
     @Setter
     private String country = "No country provided.";

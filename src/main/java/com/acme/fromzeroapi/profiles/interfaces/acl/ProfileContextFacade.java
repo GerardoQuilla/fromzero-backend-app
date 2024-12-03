@@ -83,21 +83,22 @@ public class ProfileContextFacade {
         return profileQueryService.handle(new GetDeveloperProfileByIdOrRecordIdQuery(id));
     }
 
-    public Optional<Company> getCompanyById(Long id){
-        return profileQueryService.handle(new GetCompanyByIdQuery(id));
+    public Optional<Company> getCompanyById(String id){
+        //return profileQueryService.handle(new GetCompanyByIdQuery(id));
+        return profileQueryService.handle(new GetCompanyProfileByIdOrRecordIdQuery(id));
     }
 
-    public void updateDeveloperCompletedProjects(Long developerId){
+    public void updateDeveloperCompletedProjects(String developerId){
 
         var command = new UpdateDeveloperCompletedProjectsCommand(developerId);
         var updatedDeveloper = this.profileCommandService.handle(command);
     }
 
-    public Optional<Developer> getDeveloperByProfileId(String profileId){
+    /*public Optional<Developer> getDeveloperByProfileId(String profileId){
         return profileQueryService.handle(new GetDeveloperByProfileIdQuery(profileId));
     }
 
     public Optional<Company> getCompanyByProfileId(String profileId){
         return profileQueryService.handle(new GetCompanyByProfileIdQuery(profileId));
-    }
+    }*/
 }
