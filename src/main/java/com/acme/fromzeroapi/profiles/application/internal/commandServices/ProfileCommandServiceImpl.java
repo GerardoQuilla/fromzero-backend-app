@@ -40,21 +40,18 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
     }
 
     @Override
-    public Optional<Developer> handle(UpdateDeveloperCompletedProjectsCommand command) {
-        //var developer = developerRepository.findById(command.developerId());
+    public Optional<Developer> handle(UpdateDeveloperProjectsMetricSetCommand command) {
         var developer = this.findDeveloperByIdOrProfileId(command.developerId());
         if (developer.isEmpty())return Optional.empty();
-        
-        int completedProjects = developer.get().getCompletedProjects();
 
-        developer.get().setCompletedProjects(completedProjects + 1);
+        developer.get().updateDeveloperMetrics(command.rating());
+
         this.developerRepository.save(developer.get());
         return developer;
     }
 
     @Override
     public Optional<Developer> handle(UpdateDeveloperProfileCommand command) {
-        //var developer = developerRepository.findById(command.id());
         var developer = this.findDeveloperByIdOrProfileId(command.id());
         if (developer.isEmpty())return Optional.empty();
         developer.get().setDescription(command.description());
@@ -70,7 +67,6 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
 
     @Override
     public Optional<Company> handle(UpdateCompanyProfileCommand command) {
-        //var company= companyRepository.findById(command.id());
         var company = this.findCompanyByIdOrProfileId(command.id());
         if (company.isEmpty())return Optional.empty();
         company.get().setDescription(command.description());

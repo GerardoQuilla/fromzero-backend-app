@@ -18,7 +18,7 @@ public class ExternalProjectPaymentService {
         return projectContextFacade.getProjectById(projectId);
     }
 
-    public void updateProjectStatus(Long projectId){
-        projectContextFacade.finishProject(projectId);
+    public void updateProjectStatus(Long projectId, Double developerRating){
+        projectContextFacade.finishProject(projectId, developerRating);
     }
 }

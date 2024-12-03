@@ -14,6 +14,6 @@ public class PaymentCompletedEventHandler {
     }
     @EventListener(PaymentCompletedEvent.class)
     public void onPaymentCompleted(PaymentCompletedEvent event) {
-        externalProjectPaymentService.updateProjectStatus(event.getProjectId());
+        externalProjectPaymentService.updateProjectStatus(event.getProjectId(),event.getDeveloperRating());
     }
 }

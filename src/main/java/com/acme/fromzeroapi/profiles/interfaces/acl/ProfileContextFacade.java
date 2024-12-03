@@ -4,11 +4,10 @@ import com.acme.fromzeroapi.profiles.domain.model.aggregates.Company;
 import com.acme.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
-import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperCompletedProjectsCommand;
+import com.acme.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperProjectsMetricSetCommand;
 import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileCommandService;
 import com.acme.fromzeroapi.profiles.domain.services.ProfileQueryService;
-//import com.acme.fromzeroapi.developer_branch_projects.domain.model.queries.GetDeveloperByIdQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -79,26 +78,15 @@ public class ProfileContextFacade {
     }
 
     public Optional<Developer> getDeveloperById(String id){
-        //return profileQueryService.handle(new GetDeveloperByIdQuery(id));
         return profileQueryService.handle(new GetDeveloperProfileByIdOrRecordIdQuery(id));
     }
 
     public Optional<Company> getCompanyById(String id){
-        //return profileQueryService.handle(new GetCompanyByIdQuery(id));
         return profileQueryService.handle(new GetCompanyProfileByIdOrRecordIdQuery(id));
     }
 
-    public void updateDeveloperCompletedProjects(String developerId){
-
-        var command = new UpdateDeveloperCompletedProjectsCommand(developerId);
+    public void updateDeveloperCompletedProjects(String developerId,Double rating){
+        var command = new UpdateDeveloperProjectsMetricSetCommand(developerId,rating);
         var updatedDeveloper = this.profileCommandService.handle(command);
     }
-
-    /*public Optional<Developer> getDeveloperByProfileId(String profileId){
-        return profileQueryService.handle(new GetDeveloperByProfileIdQuery(profileId));
-    }
-
-    public Optional<Company> getCompanyByProfileId(String profileId){
-        return profileQueryService.handle(new GetCompanyByProfileIdQuery(profileId));
-    }*/
 }

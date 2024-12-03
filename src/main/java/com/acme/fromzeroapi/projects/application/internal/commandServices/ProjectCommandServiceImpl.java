@@ -135,7 +135,10 @@ public class ProjectCommandServiceImpl implements ProjectCommandService {
             return;
         }
         project.get().setState(ProjectState.COMPLETADO);
-        externalProfileProjectService.updateDeveloperCompletedProjects(project.get().getDeveloper().getProfileId().RecordId());
+        externalProfileProjectService.updateDeveloperCompletedProjects(
+                project.get().getDeveloper().getProfileId().RecordId(),
+                command.developerRating()
+        );
         this.projectRepository.save(project.get());
     }
 }

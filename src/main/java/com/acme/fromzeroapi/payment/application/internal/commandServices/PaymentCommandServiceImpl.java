@@ -44,6 +44,10 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
             return Optional.empty();
         }
 
+        if(command.rating()<0 || command.rating()>5){
+            return Optional.empty();
+        }
+
         var project = externalProjectPaymentService.fetchProject(command.projectId());
         if (project.isEmpty()){
             return Optional.empty();
@@ -55,7 +59,7 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
         payment.get().updateCard(command);
         payment.get().setStatus(PaymentStatus.COMPLETADO);
 
-        payment.get().finishProject(payment.get().getProject().getId() );
+        payment.get().finishProject(payment.get().getProject().getId(),command.rating());
 
         paymentRepository.save(payment.get());
         return payment;

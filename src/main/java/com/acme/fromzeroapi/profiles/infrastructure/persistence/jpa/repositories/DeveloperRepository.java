@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface DeveloperRepository extends JpaRepository<Developer, Long> {
-    //Optional<Developer> findDeveloperByUserUserId(Long userId);
     Optional<Developer> findByEmail(String email);
     Optional<Developer> findByProfileId(ProfileId profileId);
 }

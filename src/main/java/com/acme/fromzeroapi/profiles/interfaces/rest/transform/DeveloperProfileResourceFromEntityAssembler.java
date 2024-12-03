@@ -14,7 +14,7 @@ public class DeveloperProfileResourceFromEntityAssembler {
                 entity.getDescription(),
                 entity.getCountry(),
                 entity.getPhone(),
-                entity.getCompletedProjects(),
+                entity.getProjectsMetricSet().completedProjects(),
                 entity.getSpecialties(),
                 entity.getProfileImgUrl(),
                 entity.getUserId()

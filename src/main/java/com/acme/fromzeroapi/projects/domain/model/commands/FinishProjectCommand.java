@@ -1,4 +1,4 @@
 package com.acme.fromzeroapi.projects.domain.model.commands;
 
-public record FinishProjectCommand(Long projectId) {
+public record FinishProjectCommand(Long projectId, Double developerRating) {
 }

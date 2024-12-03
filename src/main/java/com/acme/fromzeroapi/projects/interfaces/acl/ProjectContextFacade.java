@@ -27,7 +27,7 @@ public class ProjectContextFacade {
         return projectQueryService.handle(new GetProjectByIdQuery(projectId));
     }
 
-    public void finishProject(Long projectId){
-        projectCommandService.handle(new FinishProjectCommand(projectId));
+    public void finishProject(Long projectId, Double developerRating){
+        projectCommandService.handle(new FinishProjectCommand(projectId, developerRating));
     }
 }

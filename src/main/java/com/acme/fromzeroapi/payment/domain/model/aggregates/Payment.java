@@ -48,7 +48,7 @@ public class Payment extends AuditableAbstractAggregateRoot<Payment> {
     public void updateCard(CompletePaymentCommand command){
         this.card=new Card(command.cardNumber(),command.expirationDate(),command.cvv());
     }
-    public void finishProject(Long projectId){
-        this.registerEvent(new PaymentCompletedEvent(this,projectId));
+    public void finishProject(Long projectId, Double developerRating){
+        this.registerEvent(new PaymentCompletedEvent(this,projectId,developerRating));
     }
 }

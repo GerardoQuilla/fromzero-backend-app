@@ -7,7 +7,7 @@ import com.acme.fromzeroapi.profiles.domain.model.commands.*;
 import java.util.Optional;
 
 public interface ProfileCommandService {
-    Optional<Developer> handle(UpdateDeveloperCompletedProjectsCommand command);
+    Optional<Developer> handle(UpdateDeveloperProjectsMetricSetCommand command);
     Optional<Developer> handle(UpdateDeveloperProfileCommand command);
     Optional<Company> handle(UpdateCompanyProfileCommand command);
 

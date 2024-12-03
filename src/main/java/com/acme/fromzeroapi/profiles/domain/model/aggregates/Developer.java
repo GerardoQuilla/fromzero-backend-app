@@ -1,6 +1,7 @@
 package com.acme.fromzeroapi.profiles.domain.model.aggregates;
 
 import com.acme.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
+import com.acme.fromzeroapi.profiles.domain.model.valueObjects.DeveloperProjectsMetricSet;
 import com.acme.fromzeroapi.profiles.domain.model.valueObjects.ProfileId;
 import com.acme.fromzeroapi.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
@@ -32,8 +33,10 @@ public class Developer extends AuditableAbstractAggregateRoot<Developer> {
     private String country = "No country provided.";
     @Setter
     private String phone = "999 999 999";
-    @Setter
-    private int completedProjects = 0;
+
+    @Embedded
+    private DeveloperProjectsMetricSet projectsMetricSet;
+
     @Setter
     private String specialties = "No specialties provided.";
     @Setter
@@ -47,7 +50,6 @@ public class Developer extends AuditableAbstractAggregateRoot<Developer> {
             String description,
             String country,
             String phone,
-            int completedProjects,
             String specialties,
             String profileImgUrl,
             Long userId
@@ -58,7 +60,6 @@ public class Developer extends AuditableAbstractAggregateRoot<Developer> {
         this.description = description;
         this.country = country;
         this.phone = phone;
-        this.completedProjects = completedProjects;
         this.specialties = specialties;
         this.profileImgUrl = profileImgUrl;
         this.userId = userId;
@@ -72,7 +73,6 @@ public class Developer extends AuditableAbstractAggregateRoot<Developer> {
         this.description=command.description();
         this.country=command.country();
         this.phone=command.phone();
-        this.completedProjects=command.completedProjects();
         this.specialties=command.specialties();
         this.profileImgUrl=command.profileImgUrl();
         this.userId=command.userId();
@@ -80,6 +80,7 @@ public class Developer extends AuditableAbstractAggregateRoot<Developer> {
 
     public Developer() {
         this.profileId = new ProfileId();
+        this.projectsMetricSet = new DeveloperProjectsMetricSet();
     }
 
     @Override
@@ -95,7 +96,8 @@ public class Developer extends AuditableAbstractAggregateRoot<Developer> {
     }
 
 
-    /*public String getProfileId() {
-        return this.profileId.RecordId();
-    }*/
+    public void updateDeveloperMetrics(Double rating){
+        this.projectsMetricSet=this.projectsMetricSet.increment(rating);
+    }
+
 }

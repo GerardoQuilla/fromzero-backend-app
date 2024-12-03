@@ -6,6 +6,7 @@ public record CompletePaymentCommand(
         Long projectId,
         String cardNumber,
         LocalDate expirationDate,
-        String cvv
+        String cvv,
+        Double rating
 ) {
 }

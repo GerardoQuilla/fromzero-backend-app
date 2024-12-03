@@ -24,7 +24,7 @@ public class ExternalProfileProjectService {
         return profileContextFacade.getCompanyById(companyId);
     }
 
-    public void updateDeveloperCompletedProjects(String developerId){
-        profileContextFacade.updateDeveloperCompletedProjects(developerId);
+    public void updateDeveloperCompletedProjects(String developerId, Double rating){
+        profileContextFacade.updateDeveloperCompletedProjects(developerId,rating);
     }
 }

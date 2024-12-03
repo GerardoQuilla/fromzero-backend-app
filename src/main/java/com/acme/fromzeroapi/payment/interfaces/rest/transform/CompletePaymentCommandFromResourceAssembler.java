@@ -18,7 +18,8 @@ public class CompletePaymentCommandFromResourceAssembler {
                 projectId,
                 resource.cardNumber(),
                 expirationDateYYYYMM,
-                resource.cvv()
+                resource.cvv(),
+                resource.rating()
         );
     }
 }

@@ -34,28 +34,6 @@ public class ProfileQueryServiceImpl implements ProfileQueryService {
     }
 
     @Override
-    public Optional<Developer> handle(GetDeveloperByIdQuery query) {
-        return this.developerRepository.findById(query.developerId());
-    }
-
-    @Override
-    public Optional<Company> handle(GetCompanyByIdQuery query) {
-        return companyRepository.findById(query.id());
-    }
-
-    @Override
-    public Optional<Company> handle(GetCompanyByProfileIdQuery query) {
-        var company = new ProfileId(query.profileId());
-        return companyRepository.findByProfileId(company);
-    }
-
-    @Override
-    public Optional<Developer> handle(GetDeveloperByProfileIdQuery query) {
-        var developer = new ProfileId(query.profileId());
-        return developerRepository.findByProfileId(developer);
-    }
-
-    @Override
     public Optional<Company> handle(GetCompanyProfileByIdOrRecordIdQuery query) {
         try {
             var id = Long.parseLong(query.id());
