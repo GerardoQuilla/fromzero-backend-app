@@ -10,6 +10,7 @@ public record DeveloperProfileResource(
         String country,
         String phone,
         Integer completedProjects,
+        Double averageRating,
         String specialties,
         String profileImgUrl,
         Long userId

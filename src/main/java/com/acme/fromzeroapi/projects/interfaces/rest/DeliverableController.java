@@ -76,7 +76,11 @@ public class DeliverableController {
     }
 
     @Operation(summary = "Send Deliverable")
-    @PatchMapping(value = "/{deliverableId}/send")
+    @PatchMapping(
+            value = "/{deliverableId}/send",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = APPLICATION_JSON_VALUE
+    )
     public ResponseEntity<DeliverableResource> sendDeliverable(
             @PathVariable Long deliverableId,
             @RequestPart(value = "developerMessage") String developerMessage,
