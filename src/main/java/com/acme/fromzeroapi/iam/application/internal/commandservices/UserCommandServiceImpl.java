@@ -87,7 +87,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         return Optional.of(user);
     }
 
-    @Override
+    /*@Override
     public Optional<User> handle(SignUpSupportCommand command) {
         String email = command.email();
 
@@ -102,7 +102,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         var user = createUser(command.email(), command.password(), "SUPPORT");
 
         return Optional.of(user);
-    }
+    }*/
 
     @Override
     public Optional<ImmutablePair<User, String>> handle(SignInCommand command) {
