@@ -1,5 +1,8 @@
 package com.acme.fromzeroapi.shared.infrastructure.exceptionHandler;
 
+import com.acme.fromzeroapi.iam.domain.exceptions.IncorrectPasswordException;
+import com.acme.fromzeroapi.iam.domain.exceptions.UserAlreadyExistsException;
+import com.acme.fromzeroapi.iam.domain.exceptions.UserNotFoundException;
 import com.acme.fromzeroapi.projects.domain.exceptions.DeliverableFilesProcessingException;
 import com.acme.fromzeroapi.shared.domain.exceptions.CompanyNotFoundException;
 import com.acme.fromzeroapi.shared.domain.exceptions.DeveloperNotFoundException;
@@ -26,6 +29,30 @@ public class GlobalRestExceptionHandler {
 
     @ExceptionHandler(DeliverableFilesProcessingException.class)
     public ResponseEntity<MessageResource> handle(DeliverableFilesProcessingException ex){
+        LOGGER.error(ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new MessageResource(ex.getMessage()));
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<MessageResource> handle(UserNotFoundException ex){
+        LOGGER.error(ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new MessageResource(ex.getMessage()));
+    }
+
+    @ExceptionHandler(IncorrectPasswordException.class)
+    public ResponseEntity<MessageResource> handle(IncorrectPasswordException ex){
+        LOGGER.error(ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new MessageResource(ex.getMessage()));
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<MessageResource> handle(UserAlreadyExistsException ex){
         LOGGER.error(ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)

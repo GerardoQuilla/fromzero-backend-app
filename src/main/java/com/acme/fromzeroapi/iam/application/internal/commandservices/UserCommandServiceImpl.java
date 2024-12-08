@@ -3,6 +3,9 @@ package com.acme.fromzeroapi.iam.application.internal.commandservices;
 import com.acme.fromzeroapi.iam.application.internal.outboundservices.acl.ExternalProfileService;
 import com.acme.fromzeroapi.iam.application.internal.outboundservices.hashing.HashingService;
 import com.acme.fromzeroapi.iam.application.internal.outboundservices.tokens.TokenService;
+import com.acme.fromzeroapi.iam.domain.exceptions.IncorrectPasswordException;
+import com.acme.fromzeroapi.iam.domain.exceptions.UserAlreadyExistsException;
+import com.acme.fromzeroapi.iam.domain.exceptions.UserNotFoundException;
 import com.acme.fromzeroapi.iam.domain.model.aggregates.User;
 import com.acme.fromzeroapi.iam.domain.model.commands.*;
 import com.acme.fromzeroapi.iam.domain.model.entities.Role;
@@ -38,7 +41,7 @@ public class UserCommandServiceImpl implements UserCommandService {
 
     private User createUser(String email, String password, String auxR) {
         userRepository.findByEmail(email).ifPresent(user -> {
-            throw new IllegalArgumentException("User with email " + email + " already exists");
+            throw new UserAlreadyExistsException("User already exists");
         });
 
         var roles = new ArrayList<Role>();
@@ -108,11 +111,13 @@ public class UserCommandServiceImpl implements UserCommandService {
     public Optional<ImmutablePair<User, String>> handle(SignInCommand command) {
         var user = userRepository.findByEmail(command.email());
         if (user.isEmpty()) {
-            throw new IllegalArgumentException("User not found");
+            //throw new IllegalArgumentException("User not found");
+            throw new UserNotFoundException("User not found");
         }
         if (!hashingService.matches(command.password(), user.get().getPassword())) {
 
-            throw new IllegalArgumentException("Invalid password");
+            //throw new IllegalArgumentException("Invalid password");
+            throw new IncorrectPasswordException("Incorrect password");
         }
         var token = tokenService.generateToken(user.get().getEmail());
         return Optional.of(ImmutablePair.of(user.get(), token));
