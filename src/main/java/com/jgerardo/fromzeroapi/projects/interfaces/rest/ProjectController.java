@@ -1,13 +1,10 @@
 package com.jgerardo.fromzeroapi.projects.interfaces.rest;
 
 import com.jgerardo.fromzeroapi.projects.domain.model.commands.UpdateProjectCandidatesListCommand;
-import com.acme.fromzeroapi.projects.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.projects.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.projects.domain.model.valueObjects.ProjectState;
 import com.jgerardo.fromzeroapi.projects.domain.services.ProjectCommandService;
 import com.jgerardo.fromzeroapi.projects.domain.services.ProjectQueryService;
-import com.acme.fromzeroapi.projects.interfaces.rest.resources.*;
-import com.acme.fromzeroapi.projects.interfaces.rest.transform.*;
 import com.jgerardo.fromzeroapi.projects.interfaces.rest.resources.*;
 import com.jgerardo.fromzeroapi.projects.interfaces.rest.transform.*;
 import io.swagger.v3.oas.annotations.Operation;

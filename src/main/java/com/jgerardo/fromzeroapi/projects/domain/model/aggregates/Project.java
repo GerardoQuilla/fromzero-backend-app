@@ -6,7 +6,6 @@ import com.jgerardo.fromzeroapi.projects.domain.model.commands.CreateProjectComm
 import com.jgerardo.fromzeroapi.projects.domain.model.events.CreateDefaultDeliverablesEvent;
 import com.jgerardo.fromzeroapi.projects.domain.model.events.CreateDeliverablesByMethodologiesEvent;
 import com.jgerardo.fromzeroapi.projects.domain.model.events.SetProjectPaymentEvent;
-import com.acme.fromzeroapi.projects.domain.model.valueObjects.*;
 import com.jgerardo.fromzeroapi.projects.domain.model.valueObjects.*;
 import com.jgerardo.fromzeroapi.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;

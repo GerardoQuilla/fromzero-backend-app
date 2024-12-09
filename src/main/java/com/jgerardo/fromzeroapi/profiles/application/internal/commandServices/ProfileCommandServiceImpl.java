@@ -2,7 +2,6 @@ package com.jgerardo.fromzeroapi.profiles.application.internal.commandServices;
 
 import com.jgerardo.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.jgerardo.fromzeroapi.profiles.domain.model.aggregates.Company;
-import com.acme.fromzeroapi.profiles.domain.model.commands.*;
 import com.jgerardo.fromzeroapi.profiles.domain.model.commands.*;
 import com.jgerardo.fromzeroapi.profiles.domain.model.valueObjects.ProfileId;
 import com.jgerardo.fromzeroapi.profiles.domain.services.ProfileCommandService;

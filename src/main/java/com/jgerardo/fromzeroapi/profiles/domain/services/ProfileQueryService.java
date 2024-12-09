@@ -2,7 +2,6 @@ package com.jgerardo.fromzeroapi.profiles.domain.services;
 
 import com.jgerardo.fromzeroapi.profiles.domain.model.aggregates.Company;
 import com.jgerardo.fromzeroapi.profiles.domain.model.aggregates.Developer;
-import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.profiles.domain.model.queries.*;
 
 import java.util.List;

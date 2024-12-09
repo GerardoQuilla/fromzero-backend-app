@@ -2,7 +2,6 @@ package com.jgerardo.fromzeroapi.payment.domain.model.aggregates;
 
 import com.jgerardo.fromzeroapi.payment.domain.model.commands.CompletePaymentCommand;
 import com.jgerardo.fromzeroapi.payment.domain.model.events.PaymentCompletedEvent;
-import com.acme.fromzeroapi.payment.domain.model.valueObjects.*;
 import com.jgerardo.fromzeroapi.payment.domain.model.valueObjects.Card;
 import com.jgerardo.fromzeroapi.payment.domain.model.valueObjects.Currency;
 import com.jgerardo.fromzeroapi.payment.domain.model.valueObjects.PaymentAmount;

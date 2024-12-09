@@ -2,7 +2,6 @@ package com.jgerardo.fromzeroapi.projects.application.internal.queryServices;
 
 import com.jgerardo.fromzeroapi.projects.application.internal.outboundServices.acl.ExternalProfileProjectService;
 import com.jgerardo.fromzeroapi.projects.domain.model.aggregates.Project;
-import com.acme.fromzeroapi.projects.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.projects.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.projects.domain.services.ProjectQueryService;
 import com.jgerardo.fromzeroapi.projects.infrastructure.persistence.jpa.repositories.ProjectRepository;

@@ -1,10 +1,8 @@
 package com.jgerardo.fromzeroapi.profiles.interfaces.rest;
 
-import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.profiles.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.profiles.domain.services.ProfileCommandService;
 import com.jgerardo.fromzeroapi.profiles.domain.services.ProfileQueryService;
-import com.acme.fromzeroapi.profiles.interfaces.rest.resources.*;
 import com.jgerardo.fromzeroapi.profiles.interfaces.rest.resources.*;
 import com.jgerardo.fromzeroapi.profiles.interfaces.rest.transform.CompanyProfileResourceFromEntityAssembler;
 import com.jgerardo.fromzeroapi.profiles.interfaces.rest.transform.DeveloperProfileResourceFromEntityAssembler;

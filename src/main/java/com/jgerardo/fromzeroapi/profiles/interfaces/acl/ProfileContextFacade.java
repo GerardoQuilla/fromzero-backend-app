@@ -5,7 +5,6 @@ import com.jgerardo.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.jgerardo.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
 import com.jgerardo.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
 import com.jgerardo.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperProjectsMetricSetCommand;
-import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.profiles.domain.model.queries.GetCompanyProfileByIdOrRecordIdQuery;
 import com.jgerardo.fromzeroapi.profiles.domain.model.queries.GetDeveloperProfileByIdOrRecordIdQuery;
 import com.jgerardo.fromzeroapi.profiles.domain.services.ProfileCommandService;

@@ -7,7 +7,6 @@ import com.jgerardo.fromzeroapi.iam.domain.exceptions.IncorrectPasswordException
 import com.jgerardo.fromzeroapi.iam.domain.exceptions.UserAlreadyExistsException;
 import com.jgerardo.fromzeroapi.iam.domain.exceptions.UserNotFoundException;
 import com.jgerardo.fromzeroapi.iam.domain.model.aggregates.User;
-import com.acme.fromzeroapi.iam.domain.model.commands.*;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignInCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpCompanyCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpDeveloperCommand;

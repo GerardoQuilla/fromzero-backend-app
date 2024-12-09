@@ -5,7 +5,6 @@ import com.jgerardo.fromzeroapi.profiles.domain.model.aggregates.Developer;
 import com.jgerardo.fromzeroapi.profiles.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.profiles.domain.model.valueObjects.ProfileId;
 import com.jgerardo.fromzeroapi.profiles.domain.services.ProfileQueryService;
-import com.acme.fromzeroapi.profiles.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.DeveloperRepository;
 import com.jgerardo.fromzeroapi.profiles.infrastructure.persistence.jpa.repositories.CompanyRepository;
 import org.springframework.stereotype.Service;

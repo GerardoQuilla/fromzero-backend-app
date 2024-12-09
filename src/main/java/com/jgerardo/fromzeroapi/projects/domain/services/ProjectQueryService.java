@@ -1,7 +1,6 @@
 package com.jgerardo.fromzeroapi.projects.domain.services;
 
 import com.jgerardo.fromzeroapi.projects.domain.model.aggregates.Project;
-import com.acme.fromzeroapi.projects.domain.model.queries.*;
 import com.jgerardo.fromzeroapi.projects.domain.model.queries.*;
 
 import java.util.List;
