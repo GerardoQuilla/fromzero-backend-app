@@ -30,7 +30,7 @@ spring:
     hibernate:
       ddl-auto: update
       naming:
-        physical-strategy: com.acme.fromzeroapi.shared.infrastructure.persistence.jpa.configuration.strategy.SnakeCaseWithPluralizedTablePhysicalNamingStrategy
+        physical-strategy: com.jgerardo.fromzeroapi.shared.infrastructure.persistence.jpa.configuration.strategy.SnakeCaseWithPluralizedTablePhysicalNamingStrategy
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
