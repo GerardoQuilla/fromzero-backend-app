@@ -123,26 +123,4 @@ public class WebSecurityConfiguration{
         this.unauthorizedRequestHandler = authenticationEntryPoint;
     }
 
-    /*@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(configurer->configurer.configurationSource(_->{
-            var cors = new CorsConfiguration();
-            cors.setAllowedOrigins(List.of("*"));
-            cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
-            cors.setAllowedHeaders(List.of("*"));
-            return cors;
-        }));
-        http.csrf(csrfConfigurer -> csrfConfigurer.disable())
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html",
-                                "/swagger-ui/**",
-                                "/v1/api/auth/**",
-                                "/swagger-resources/**",
-                                "/webjars/**",
-                                "/v1/api/**").permitAll()
-                        .anyRequest().authenticated());
-        return http.build();
-    }*/
 }

@@ -25,10 +25,10 @@ public class TokenServiceImpl implements BearerTokenService {
     private static final String BEARER_TOKEN_PREFIX = "Bearer";
     private static final int TOKEN_BEGIN_INDEX = 7;
 
-    @Value("WriteHereYourSecretStringForTokenSigningCredentials")
+    @Value("${authorization.jwt.secret}")
     private String secret;
 
-    @Value("7")
+    @Value("${authorization.jwt.expiration.days}")
     private int expirationDays;
 
     /**
