@@ -1,10 +1,12 @@
 package com.jgerardo.fromzeroapi.iam.interfaces.rest;
 
+import com.jgerardo.fromzeroapi.iam.domain.model.commands.ResetPasswordCommand;
 import com.jgerardo.fromzeroapi.iam.domain.services.UserCommandService;
 import com.jgerardo.fromzeroapi.iam.interfaces.rest.resources.*;
 import com.jgerardo.fromzeroapi.iam.interfaces.rest.transform.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +59,15 @@ public class AuthController {
                 authenticatedUser.get().getLeft(),authenticatedUser.get().getRight());
 
         return ResponseEntity.ok(authenticatedUserResource);
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<String> changePassword(@RequestBody ResetPasswordResource resource, HttpServletRequest request) {
+        String username = request.getAttribute("resetPasswordUsername").toString();
+        if (username==null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido o expirado");
+        }
+        userCommandService.handle(new ResetPasswordCommand(username,resource.newPassword()));
+        return ResponseEntity.ok("Password reset successful");
     }
 }

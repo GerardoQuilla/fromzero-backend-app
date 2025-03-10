@@ -43,4 +43,8 @@ public class User {
         this.roles.addAll(roles);
         return this;
     }
+
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.password = encryptedPassword;
+    }
 }

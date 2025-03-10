@@ -7,6 +7,7 @@ import com.jgerardo.fromzeroapi.iam.domain.exceptions.IncorrectPasswordException
 import com.jgerardo.fromzeroapi.iam.domain.exceptions.UserAlreadyExistsException;
 import com.jgerardo.fromzeroapi.iam.domain.exceptions.UserNotFoundException;
 import com.jgerardo.fromzeroapi.iam.domain.model.aggregates.User;
+import com.jgerardo.fromzeroapi.iam.domain.model.commands.ResetPasswordCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignInCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpCompanyCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpDeveloperCommand;
@@ -122,6 +123,16 @@ public class UserCommandServiceImpl implements UserCommandService {
         }
         var token = tokenService.generateToken(user.get().getEmail());
         return Optional.of(ImmutablePair.of(user.get(), token));
+    }
+
+    @Override
+    public void handle(ResetPasswordCommand command) {
+        var user = userRepository.findByEmail(command.email());
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User not found");
+        }
+        user.get().setEncryptedPassword(hashingService.encode(command.newPassword()));
+        userRepository.save(user.get());
     }
 }
 

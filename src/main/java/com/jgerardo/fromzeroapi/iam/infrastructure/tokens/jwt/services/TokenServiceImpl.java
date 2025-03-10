@@ -156,4 +156,54 @@ public class TokenServiceImpl implements BearerTokenService {
         if (isTokenPresentIn(parameter) && isBearerTokenIn(parameter)) return extractTokenFrom(parameter);
         return null;
     }
+
+    @Override
+    public String generateResetPasswordToken(String username) {
+        var issuedAt = new Date();
+        var expiration = DateUtils.addMinutes(issuedAt, 15);
+        var key = getSigningKey();
+        return Jwts.builder()
+                .subject(username)
+                .issuedAt(issuedAt)
+                .expiration(expiration)
+                .claim("type","password_reset")
+                .signWith(key)
+                .compact();
+    }
+
+    @Override
+    public boolean validateResetPasswordToken(String token) {
+
+        try {
+            var claims = Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
+
+            String tokenType = claims.get("type", String.class);
+
+            if (!"password_reset".equals(tokenType)) {
+                LOGGER.error("Token type mismatch. Expected: password_reset, Found: {}", tokenType);
+                return false;
+            }
+            LOGGER.info("Token is valid and matches expected type: password_reset");
+            return true;
+
+        } catch (ExpiredJwtException e) {
+            LOGGER.error("Token is expired: {}", e.getMessage());
+        } catch (Exception e) {
+            LOGGER.error("Invalid Token: {}", e.getMessage());
+        }
+        return false;
+
+    }
+
+    @Override
+    public boolean isPasswordResetToken(String token) {
+        try {
+            Claims claims = extractAllClaims(token);
+            return "password_reset".equals(claims.get("type", String.class));
+        } catch (Exception e) {
+            LOGGER.error("Error al verificar el tipo de token: {}", e.getMessage());
+            return false;
+        }
+    }
+
 }

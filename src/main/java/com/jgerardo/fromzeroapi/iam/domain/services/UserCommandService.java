@@ -1,6 +1,7 @@
 package com.jgerardo.fromzeroapi.iam.domain.services;
 
 import com.jgerardo.fromzeroapi.iam.domain.model.aggregates.User;
+import com.jgerardo.fromzeroapi.iam.domain.model.commands.ResetPasswordCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignInCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpDeveloperCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpCompanyCommand;
@@ -13,4 +14,5 @@ public interface UserCommandService {
     Optional<User> handle(SignUpCompanyCommand command);
     //Optional<User> handle(SignUpSupportCommand command);
     Optional<ImmutablePair<User, String>> handle(SignInCommand command);
+    void handle(ResetPasswordCommand command);
 }

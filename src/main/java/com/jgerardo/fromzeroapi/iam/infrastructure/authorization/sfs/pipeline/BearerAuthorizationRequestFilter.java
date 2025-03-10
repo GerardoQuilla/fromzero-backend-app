@@ -36,17 +36,51 @@ public class BearerAuthorizationRequestFilter extends OncePerRequestFilter {
      * @param filterChain The filter chain object.
      */
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain) throws ServletException, IOException {
+
         try {
             String token = tokenService.getBearerTokenFrom(request);
             LOGGER.info("Token: {}", token);
-            if (token != null && tokenService.validateToken(token)) {
+
+            if(token != null) {
+                if(tokenService.isPasswordResetToken(token)){
+                    LOGGER.info("Reset Password Token detected");
+
+                    if(request.getRequestURI().startsWith("/v1/api/auth/reset-password")){
+                        if(tokenService.validateResetPasswordToken(token)){
+                            LOGGER.info("Reset Password Token is valid");
+                            request.setAttribute("resetPasswordUsername", tokenService.getUsernameFromToken(token));
+
+                        } else {
+                            LOGGER.warn("Token de recuperación inválido o expirado");
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token de recuperación inválido");
+                            return;
+                        }
+                    } else {
+                        LOGGER.warn("Intento de usar un token de recuperación en una ruta no autorizada");
+                        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Acceso denegado");
+                        return;
+                    }
+
+                } else if (tokenService.validateToken(token)) {
+                    String username = tokenService.getUsernameFromToken(token);
+                    var userDetails = userDetailsService.loadUserByUsername(username);
+                    SecurityContextHolder.getContext().setAuthentication(UsernamePasswordAuthenticationTokenBuilder.build(userDetails, request));
+                } else {
+                    LOGGER.info("Token is not valid");
+                }
+            }
+
+            /*if (token != null && tokenService.validateToken(token)) {
                 String username = tokenService.getUsernameFromToken(token);
                 var userDetails = userDetailsService.loadUserByUsername(username);
                 SecurityContextHolder.getContext().setAuthentication(UsernamePasswordAuthenticationTokenBuilder.build(userDetails, request));
             } else {
                 LOGGER.info("Token is not valid");
-            }
+            }*/
 
         } catch (Exception e) {
             LOGGER.error("Cannot set user authentication: {}", e.getMessage());
