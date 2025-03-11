@@ -63,11 +63,9 @@ public class AuthController {
 
     @PutMapping("/reset-password")
     public ResponseEntity<String> changePassword(@RequestBody ResetPasswordResource resource, HttpServletRequest request) {
-        String username = request.getAttribute("resetPasswordUsername").toString();
-        if (username==null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido o expirado");
-        }
-        userCommandService.handle(new ResetPasswordCommand(username,resource.newPassword()));
+        var username = request.getAttribute("resetPasswordUsername");
+        if(username==null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido o expirado");
+        userCommandService.handle(new ResetPasswordCommand(username.toString(),resource.newPassword()));
         return ResponseEntity.ok("Password reset successful");
     }
 }
