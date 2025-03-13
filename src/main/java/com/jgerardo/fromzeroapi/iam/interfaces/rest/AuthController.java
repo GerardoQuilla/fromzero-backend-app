@@ -1,5 +1,6 @@
 package com.jgerardo.fromzeroapi.iam.interfaces.rest;
 
+import com.jgerardo.fromzeroapi.iam.domain.model.commands.ForgotPasswordCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.commands.ResetPasswordCommand;
 import com.jgerardo.fromzeroapi.iam.domain.services.UserCommandService;
 import com.jgerardo.fromzeroapi.iam.interfaces.rest.resources.*;
@@ -59,6 +60,12 @@ public class AuthController {
                 authenticatedUser.get().getLeft(),authenticatedUser.get().getRight());
 
         return ResponseEntity.ok(authenticatedUserResource);
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordResource resource){
+        userCommandService.handle(new ForgotPasswordCommand(resource.email()));
+        return ResponseEntity.ok("Your reset password request was sent");
     }
 
     @PutMapping("/reset-password")

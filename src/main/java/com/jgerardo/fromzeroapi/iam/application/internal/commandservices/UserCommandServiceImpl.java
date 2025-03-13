@@ -1,5 +1,6 @@
 package com.jgerardo.fromzeroapi.iam.application.internal.commandservices;
 
+import com.jgerardo.fromzeroapi.iam.application.internal.outboundservices.acl.EmailService;
 import com.jgerardo.fromzeroapi.iam.application.internal.outboundservices.acl.ExternalProfileService;
 import com.jgerardo.fromzeroapi.iam.application.internal.outboundservices.hashing.HashingService;
 import com.jgerardo.fromzeroapi.iam.application.internal.outboundservices.tokens.TokenService;
@@ -7,10 +8,7 @@ import com.jgerardo.fromzeroapi.iam.domain.exceptions.IncorrectPasswordException
 import com.jgerardo.fromzeroapi.iam.domain.exceptions.UserAlreadyExistsException;
 import com.jgerardo.fromzeroapi.iam.domain.exceptions.UserNotFoundException;
 import com.jgerardo.fromzeroapi.iam.domain.model.aggregates.User;
-import com.jgerardo.fromzeroapi.iam.domain.model.commands.ResetPasswordCommand;
-import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignInCommand;
-import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpCompanyCommand;
-import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpDeveloperCommand;
+import com.jgerardo.fromzeroapi.iam.domain.model.commands.*;
 import com.jgerardo.fromzeroapi.iam.domain.model.entities.Role;
 import com.jgerardo.fromzeroapi.iam.domain.model.valueobjects.Roles;
 import com.jgerardo.fromzeroapi.iam.domain.services.UserCommandService;
@@ -30,15 +28,19 @@ public class UserCommandServiceImpl implements UserCommandService {
     private final TokenService tokenService;
     private final HashingService hashingService;
 
+    private final EmailService emailService;
+
     public UserCommandServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
                                   ExternalProfileService externalProfileService,
                                   TokenService tokenService,
-                                  HashingService hashingService) {
+                                  HashingService hashingService,
+                                  EmailService emailService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.externalProfileService = externalProfileService;
         this.tokenService = tokenService;
         this.hashingService = hashingService;
+        this.emailService = emailService;
     }
 
     private User createUser(String email, String password, String auxR) {
@@ -123,6 +125,16 @@ public class UserCommandServiceImpl implements UserCommandService {
         }
         var token = tokenService.generateToken(user.get().getEmail());
         return Optional.of(ImmutablePair.of(user.get(), token));
+    }
+
+    @Override
+    public void handle(ForgotPasswordCommand command) {
+        var user = userRepository.findByEmail(command.email());
+        if (user.isEmpty()){
+            throw new UserNotFoundException("User not found");
+        }
+        var resetPasswordToken = tokenService.generateResetPasswordToken(command.email());
+        emailService.sendEmail(command.email(),resetPasswordToken);
     }
 
     @Override

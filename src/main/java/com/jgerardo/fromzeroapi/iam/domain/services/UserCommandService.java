@@ -1,10 +1,7 @@
 package com.jgerardo.fromzeroapi.iam.domain.services;
 
 import com.jgerardo.fromzeroapi.iam.domain.model.aggregates.User;
-import com.jgerardo.fromzeroapi.iam.domain.model.commands.ResetPasswordCommand;
-import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignInCommand;
-import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpDeveloperCommand;
-import com.jgerardo.fromzeroapi.iam.domain.model.commands.SignUpCompanyCommand;
+import com.jgerardo.fromzeroapi.iam.domain.model.commands.*;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 import java.util.Optional;
@@ -15,4 +12,5 @@ public interface UserCommandService {
     //Optional<User> handle(SignUpSupportCommand command);
     Optional<ImmutablePair<User, String>> handle(SignInCommand command);
     void handle(ResetPasswordCommand command);
+    void handle(ForgotPasswordCommand command);
 }

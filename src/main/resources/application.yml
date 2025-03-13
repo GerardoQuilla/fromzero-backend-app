@@ -5,6 +5,18 @@ spring:
     import:
       - env.properties
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -44,3 +56,6 @@ authorization:
     secret: WriteHereYourSecretStringForTokenSigningCredentialsV2
     expiration:
       days: 30
+
+email-service:
+  verification-url: ${VERIFICATION_URL:http://localhost:4200/auth/reset-password?token=}

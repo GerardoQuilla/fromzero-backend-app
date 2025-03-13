@@ -160,7 +160,7 @@ public class TokenServiceImpl implements BearerTokenService {
     @Override
     public String generateResetPasswordToken(String username) {
         var issuedAt = new Date();
-        var expiration = DateUtils.addMinutes(issuedAt, 15);
+        var expiration = DateUtils.addMinutes(issuedAt, 20);
         var key = getSigningKey();
         return Jwts.builder()
                 .subject(username)
