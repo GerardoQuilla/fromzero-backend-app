@@ -40,4 +40,12 @@ public class ExternalProfileService {
                 userId
         );
     }
+
+    public void deleteCompanyProfile(Long id){
+        profileContextFacade.deleteCompanyProfile(id);
+    }
+
+    public void deleteDeveloperProfile(Long id){
+        profileContextFacade.deleteDeveloperProfile(id);
+    }
 }

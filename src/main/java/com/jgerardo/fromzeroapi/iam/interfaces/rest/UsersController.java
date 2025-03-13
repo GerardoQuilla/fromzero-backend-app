@@ -1,13 +1,17 @@
 package com.jgerardo.fromzeroapi.iam.interfaces.rest;
 
+import com.jgerardo.fromzeroapi.iam.domain.model.commands.DeleteUserCommand;
 import com.jgerardo.fromzeroapi.iam.domain.model.queries.GetAllUsersQuery;
 import com.jgerardo.fromzeroapi.iam.domain.model.queries.GetUserByEmailQuery;
 import com.jgerardo.fromzeroapi.iam.domain.model.queries.GetUserByIdQuery;
+import com.jgerardo.fromzeroapi.iam.domain.services.UserCommandService;
 import com.jgerardo.fromzeroapi.iam.domain.services.UserQueryService;
 import com.jgerardo.fromzeroapi.iam.interfaces.rest.resources.UserResource;
 import com.jgerardo.fromzeroapi.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
+import com.jgerardo.fromzeroapi.shared.interfaces.rest.resources.MessageResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +24,13 @@ import java.util.List;
 public class UsersController {
 
     private final UserQueryService userQueryService;
+    private final UserCommandService userCommandService;
 
-    public UsersController(UserQueryService userQueryService) {
+    public UsersController(
+            UserQueryService userQueryService,
+            UserCommandService userCommandService) {
         this.userQueryService = userQueryService;
+        this.userCommandService = userCommandService;
     }
 
     @Operation(summary = "Get user id by email")
@@ -63,6 +71,12 @@ public class UsersController {
         }
         var userResource = UserResourceFromEntityAssembler.toResourceFromEntity(user.get());
         return ResponseEntity.ok(userResource);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<MessageResource> deleteUserById(@PathVariable Long userId) {
+        userCommandService.handle(new DeleteUserCommand(userId));
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResource("User deleted successfully"));
     }
 
 }

@@ -5,6 +5,7 @@ import com.jgerardo.fromzeroapi.iam.domain.model.commands.ResetPasswordCommand;
 import com.jgerardo.fromzeroapi.iam.domain.services.UserCommandService;
 import com.jgerardo.fromzeroapi.iam.interfaces.rest.resources.*;
 import com.jgerardo.fromzeroapi.iam.interfaces.rest.transform.*;
+import com.jgerardo.fromzeroapi.shared.interfaces.rest.resources.MessageResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,16 +64,16 @@ public class AuthController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordResource resource){
+    public ResponseEntity<MessageResource> forgotPassword(@RequestBody ForgotPasswordResource resource){
         userCommandService.handle(new ForgotPasswordCommand(resource.email()));
-        return ResponseEntity.ok("Your reset password request was sent");
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResource("Your reset password request was sent"));
     }
 
     @PutMapping("/reset-password")
-    public ResponseEntity<String> changePassword(@RequestBody ResetPasswordResource resource, HttpServletRequest request) {
+    public ResponseEntity<MessageResource> changePassword(@RequestBody ResetPasswordResource resource, HttpServletRequest request) {
         var username = request.getAttribute("resetPasswordUsername");
-        if(username==null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido o expirado");
+        if(username==null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResource("Token inválido o expirado"));
         userCommandService.handle(new ResetPasswordCommand(username.toString(),resource.newPassword()));
-        return ResponseEntity.ok("Password reset successful");
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResource("Password reset successful"));
     }
 }

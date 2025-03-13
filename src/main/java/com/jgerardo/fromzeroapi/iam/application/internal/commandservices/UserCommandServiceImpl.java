@@ -146,5 +146,21 @@ public class UserCommandServiceImpl implements UserCommandService {
         user.get().setEncryptedPassword(hashingService.encode(command.newPassword()));
         userRepository.save(user.get());
     }
+
+    @Override
+    public void handle(DeleteUserCommand command) {
+        var user = userRepository.findById(command.id());
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("User not found");
+        }
+        user.get().getRoles().stream().forEach(role -> {
+            switch (role.getName()){
+                case Roles.COMPANY -> externalProfileService.deleteCompanyProfile(command.id());
+                case Roles.DEVELOPER -> externalProfileService.deleteDeveloperProfile(command.id());
+            }
+        });
+        userRepository.delete(user.get());
+
+    }
 }
 

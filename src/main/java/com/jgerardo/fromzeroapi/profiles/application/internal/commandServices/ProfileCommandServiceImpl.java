@@ -94,4 +94,17 @@ public class ProfileCommandServiceImpl implements ProfileCommandService {
         developerRepository.save(developer);
     }
 
+    @Override
+    public void handle(DeleteDeveloperProfileCommand command) {
+        var developer = developerRepository.findByUserId(command.userId());
+        if (developer.isEmpty())return;
+        developerRepository.delete(developer.get());
+    }
+
+    @Override
+    public void handle(DeleteCompanyProfileCommand command) {
+        var company = companyRepository.findByUserId(command.userId());
+        if (company.isEmpty())return;
+        companyRepository.delete(company.get());
+    }
 }

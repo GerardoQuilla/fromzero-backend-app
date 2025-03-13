@@ -13,4 +13,5 @@ public interface UserCommandService {
     Optional<ImmutablePair<User, String>> handle(SignInCommand command);
     void handle(ResetPasswordCommand command);
     void handle(ForgotPasswordCommand command);
+    void handle(DeleteUserCommand command);
 }

@@ -10,6 +10,8 @@ public interface ProfileCommandService {
     Optional<Developer> handle(UpdateDeveloperProjectsMetricSetCommand command);
     Optional<Developer> handle(UpdateDeveloperProfileCommand command);
     Optional<Company> handle(UpdateCompanyProfileCommand command);
+    void handle(DeleteDeveloperProfileCommand command);
+    void handle(DeleteCompanyProfileCommand command);
 
     void handle(CreateCompanyProfileCommand command);
     void handle(CreateDeveloperProfileCommand command);

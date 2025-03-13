@@ -2,9 +2,7 @@ package com.jgerardo.fromzeroapi.profiles.interfaces.acl;
 
 import com.jgerardo.fromzeroapi.profiles.domain.model.aggregates.Company;
 import com.jgerardo.fromzeroapi.profiles.domain.model.aggregates.Developer;
-import com.jgerardo.fromzeroapi.profiles.domain.model.commands.CreateCompanyProfileCommand;
-import com.jgerardo.fromzeroapi.profiles.domain.model.commands.CreateDeveloperProfileCommand;
-import com.jgerardo.fromzeroapi.profiles.domain.model.commands.UpdateDeveloperProjectsMetricSetCommand;
+import com.jgerardo.fromzeroapi.profiles.domain.model.commands.*;
 import com.jgerardo.fromzeroapi.profiles.domain.model.queries.GetCompanyProfileByIdOrRecordIdQuery;
 import com.jgerardo.fromzeroapi.profiles.domain.model.queries.GetDeveloperProfileByIdOrRecordIdQuery;
 import com.jgerardo.fromzeroapi.profiles.domain.services.ProfileCommandService;
@@ -90,4 +88,13 @@ public class ProfileContextFacade {
         var command = new UpdateDeveloperProjectsMetricSetCommand(developerId,rating);
         var updatedDeveloper = this.profileCommandService.handle(command);
     }
+
+    public void deleteCompanyProfile(Long userId){
+        profileCommandService.handle(new DeleteCompanyProfileCommand(userId));
+    }
+
+    public void deleteDeveloperProfile(Long userId){
+        profileCommandService.handle(new DeleteDeveloperProfileCommand(userId));
+    }
+
 }
