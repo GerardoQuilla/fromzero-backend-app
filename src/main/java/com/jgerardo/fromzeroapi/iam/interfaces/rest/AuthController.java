@@ -69,11 +69,11 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResource("Your reset password request was sent"));
     }
 
-    @PutMapping("/reset-password")
+    @PatchMapping("/reset-password")
     public ResponseEntity<MessageResource> changePassword(@RequestBody ResetPasswordResource resource, HttpServletRequest request) {
         var username = request.getAttribute("resetPasswordUsername");
         if(username==null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResource("Token inválido o expirado"));
         userCommandService.handle(new ResetPasswordCommand(username.toString(),resource.newPassword()));
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageResource("Password reset successful"));
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResource("Successful password reset"));
     }
 }
