@@ -16,6 +16,7 @@ spring:
           auth: true
           starttls:
             enable: true
+          timeout: 5000
 
   datasource:
     url: ${DB_URL}
@@ -58,4 +59,4 @@ authorization:
       days: 30
 
 email-service:
-  verification-url: ${VERIFICATION_URL:http://localhost:4200/auth/reset-password?token=}
+  verification-url: ${VERIFICATION_URL:http://localhost:4200/reset-password?token=}
